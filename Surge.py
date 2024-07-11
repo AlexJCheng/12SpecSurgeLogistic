@@ -1,0 +1,79 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define the domain
+global x
+x = np.linspace(0, 2000, 5000)
+
+# Plot size
+ymin = 0
+ymax = 4
+ystep = 1
+xmin = 0
+xmax = 2000
+xstep = 500
+
+def calc_eq(a, k):
+    y = a * x * np.e ** (-1 * k * x)
+    return y
+
+def plot_setup():
+    plt.figure(figsize=(6,6))
+    
+    # Add thick lines at x=0 and y=0
+    plt.axhline(0, color='black', linewidth=1)  # Horizontal line (y=0)
+    plt.axvline(0, color='black', linewidth=1)  # Vertical line (x=0)
+
+    # Set labels and title
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title(f'Surge Function')
+
+    # Set the limits of x and y axes
+    plt.xlim(xmin, xmax)
+    plt.ylim(ymin, ymax)
+
+    # Show grid
+    plt.grid(which = 'major', linewidth = 0.5)
+    plt.xticks(np.arange(xmin,xmax+xstep,xstep))
+    plt.yticks(np.arange(ymin,ymax+ystep,ystep))
+
+def plot_inf(a, k):
+    plt.plot(2/k, (2*a)/(k * np.e ** 2), marker = 'o')
+    plt.annotate(f'({2/k}, {round((2*a)/(k * np.e ** 2),2)})', (2/k + 0.3, (2*a)/(k * np.e ** 2)))
+
+def plot_max(k, y):
+    plt.plot(1/k, max(y), marker = 'o')
+    plt.annotate(f'({1/k}, {round(max(y),2)})', (1/k + 0.3, max(y)))
+
+def main():
+    plot_setup()
+    a = 0.048
+    k = 0.0052
+    ''' 
+    #Multiple array of A
+    for i in a:
+        y = calc_eq(i, k)
+        plt.plot(x, y, label = f'{i}xe^(-{k}x)')
+        plot_max(k, y) 
+        plot_inf(i, k)'''
+    
+    '''
+    for i in k:
+        y = calc_eq(a, i)
+        plt.plot(x, y, label = f'{a}xe^(-{i}x)')
+        #plot_max(i, y)
+        plot_inf(a, i)'''
+    
+    y = calc_eq(a, k)
+    plt.plot(x, y, label = f'{a}xe^(-{k}x)')
+    plot_max(k, y)
+    plot_inf(a, k)
+
+    plt.legend()
+    plt.savefig(f'MDM{a}xe^(-{k}x)i.png', dpi=300, bbox_inches='tight')
+    plt.show()
+
+if __name__ == "__main__":
+    main()
+

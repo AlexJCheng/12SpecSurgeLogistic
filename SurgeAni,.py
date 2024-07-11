@@ -11,11 +11,11 @@ xmax = 1
 xstep = 0.1
 
 # Define the parameter range
-x = np.linspace(xmin, xmax, 100)
+x = np.linspace(xmin, xmax, (xmax-xmin)*20)
 a = 1
 k = 10
 
-# Define the parametric equations
+# Define the equations
 y = a * x * np.e ** (-1 * k * x)
 
 # Create the plot
